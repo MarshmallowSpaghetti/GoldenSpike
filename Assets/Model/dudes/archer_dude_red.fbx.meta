@@ -1,0 +1,156 @@
+fileFormatVersion: 2
+guid: 1bcab5df468089941ac84778efd4a5f7
+timeCreated: 1513787712
+licenseType: Free
+ModelImporter:
+  serializedVersion: 21
+  fileIDToRecycleName:
+    100000: //RootNode
+    100002: Belly
+    100004: body
+    100006: Dagger
+    100008: Dagger1
+    100010: feather
+    100012: feather2
+    100014: feather3
+    100016: Foot_L
+    100018: Foot_L2
+    100020: Foot_R
+    100022: Foot_R1
+    100024: Hair2
+    100026: Hand_L
+    100028: Hand_L2
+    100030: Hand_R
+    100032: Hand_R1
+    100034: hat
+    100036: Head
+    100038: HeadJoint
+    100040: scarf
+    100042: Teeth6
+    400000: //RootNode
+    400002: Belly
+    400004: body
+    400006: Dagger
+    400008: Dagger1
+    400010: feather
+    400012: feather2
+    400014: feather3
+    400016: Foot_L
+    400018: Foot_L2
+    400020: Foot_R
+    400022: Foot_R1
+    400024: Hair2
+    400026: Hand_L
+    400028: Hand_L2
+    400030: Hand_R
+    400032: Hand_R1
+    400034: hat
+    400036: Head
+    400038: HeadJoint
+    400040: scarf
+    400042: Teeth6
+    4300000: Head
+    4300002: Hand_L2
+    4300004: Foot_L2
+    4300006: scarf
+    4300008: body
+    4300010: Dagger
+    4300012: Teeth6
+    4300014: Hand_R1
+    4300016: Foot_R1
+    4300018: Hair2
+    4300020: hat
+    4300022: feather
+    4300024: feather2
+    4300026: feather3
+    7400000: Take 001
+    9500000: //RootNode
+    13700000: body
+    13700002: Dagger
+    13700004: feather
+    13700006: feather2
+    13700008: feather3
+    13700010: Foot_L2
+    13700012: Foot_R1
+    13700014: Hair2
+    13700016: Hand_L2
+    13700018: Hand_R1
+    13700020: hat
+    13700022: Head
+    13700024: scarf
+    13700026: Teeth6
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
