@@ -108,27 +108,27 @@ public class Player : MonoBehaviour
         if (m_motion.sqrMagnitude.Sgn() > 0)
             transform.forward = m_motion.normalized;
 
-        if (m_isConfused == true)
-            transform.forward = Quaternion.AngleAxis(10, Vector3.up) * transform.forward;
+        //if (m_isConfused == true)
+        //    transform.forward = Quaternion.AngleAxis(10, Vector3.up) * transform.forward;
 
-        print("speed " + (m_motion * speed).magnitude);
-        if ((m_motion * speed).magnitude > 0.01f)
-        {
-            Animator.SetBool("Move", true);
-            Animator.SetTrigger("Run");
-        }
-        else
-        {
-            Animator.SetBool("Move", false);
-            Animator.SetTrigger("Idle");
+        //print("speed " + (m_motion * speed).magnitude);
+        //if ((m_motion * speed).magnitude > 0.01f)
+        //{
+        //    Animator.SetBool("Move", true);
+        //    Animator.SetTrigger("Run");
+        //}
+        //else
+        //{
+        //    Animator.SetBool("Move", false);
+        //    Animator.SetTrigger("Idle");
 
-            if (m_isConfused == false)
-            {
-                //transform.forward = (m_lookPos - transform.position).SetY(0);
-                transform.forward = Vector3.Slerp(transform.forward, (m_lookPos - transform.position).SetY(0), 0.1f);
-                //print("angle between " + Vector3.Angle(transform.forward, (m_lookPos - transform.position).SetY(0)));
-            }
-        }
+        //    if (m_isConfused == false)
+        //    {
+        //        //transform.forward = (m_lookPos - transform.position).SetY(0);
+        //        transform.forward = Vector3.Slerp(transform.forward, (m_lookPos - transform.position).SetY(0), 0.1f);
+        //        //print("angle between " + Vector3.Angle(transform.forward, (m_lookPos - transform.position).SetY(0)));
+        //    }
+        //}
     }
 
     private void MovementTypeA()
