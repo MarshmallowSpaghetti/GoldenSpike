@@ -19,6 +19,10 @@ public class Player : MonoBehaviour
     private Vector2 firstBoundary = new Vector2(0.4f, 0.6f);
     private Vector2 secondaryBoundary = new Vector2(0.1f, 0.9f);
 
+    public Transform leftHandTrans;
+    public Transform rightHandTrans;
+    public Transform holdingItem;
+
     public bool IsConfused
     {
         get
@@ -62,6 +66,22 @@ public class Player : MonoBehaviour
         //ClampPlayerPos();
 
         AttackCheck();
+
+        if(Input.GetMouseButtonDown(0))
+        {
+            TryToThrowSth();
+        }
+    }
+
+    private void TryToThrowSth()
+    {
+        if(holdingItem != null)
+        {
+            holdingItem.SetParent(null);
+            holdingItem.GetComponent<Rigidbody>().isKinematic = false;
+            holdingItem.GetComponent<Rigidbody>().AddForce(transform.forward.normalized.SetY(0.4f) * 10, ForceMode.Impulse);
+            holdingItem = null;
+        }
     }
 
     private void GlobalMoveAlwaysForward()
@@ -70,7 +90,7 @@ public class Player : MonoBehaviour
         //print("motion " + m_motion.normalized);
         //if (m_motion.sqrMagnitude.Sgn() > 0)
         float angleInAFrame = 300 * Time.deltaTime;
-        if (Vector3.Angle(transform.forward, m_motion) < angleInAFrame* 2)
+        if (Vector3.Angle(transform.forward, m_motion) < angleInAFrame * 2)
         {
             transform.position += m_motion * speed;
             transform.forward = m_motion.normalized;
@@ -95,7 +115,7 @@ public class Player : MonoBehaviour
             Vector3.Slerp(transform.forward, (m_lookPos - transform.position).SetY(0), 0.1f);
     }
 
-        private void MovementTypeA()
+    private void MovementTypeA()
     {
         m_motion = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
 
@@ -158,5 +178,20 @@ public class Player : MonoBehaviour
             Mathf.Clamp(transform.position.x, leftDown.x, rightUp.x),
             0,
             Mathf.Clamp(transform.position.z, leftDown.y, rightUp.y));
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.GetComponent<PickableItem>())
+        {
+            //print("Pick " + collision.gameObject.name);
+            if (leftHandTrans != null && holdingItem == null)
+            {
+                collision.transform.position = (leftHandTrans.position + rightHandTrans.position) * 0.5f;
+                collision.transform.SetParent(transform);
+                collision.gameObject.GetComponent<Rigidbody>().isKinematic = true;
+                holdingItem = collision.transform;
+            }
+        }
     }
 }
