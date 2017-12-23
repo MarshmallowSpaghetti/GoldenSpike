@@ -62,51 +62,27 @@ public class Player : MonoBehaviour
         //ClampPlayerPos();
 
         AttackCheck();
-
-        //CheckScreenPosition();
-    }
-
-    private void CheckScreenPosition()
-    {
-        Vector3 screenPos = Camera.main.WorldToViewportPoint(transform.position);
-        //print("pos " + screenPos);
-
-        if (screenPos.x < secondaryBoundary.x || screenPos.x > secondaryBoundary.y
-            || screenPos.y < secondaryBoundary.x || screenPos.y > secondaryBoundary.y)
-        {
-            screenPos = new Vector3(
-                Mathf.Clamp(screenPos.x, secondaryBoundary.x, secondaryBoundary.y),
-                Mathf.Clamp(screenPos.y, secondaryBoundary.x, secondaryBoundary.y),
-                screenPos.z);
-
-            Vector3 worldPos = Camera.main.ViewportToWorldPoint(screenPos);
-            Vector3 offset = worldPos - transform.position;
-            //print("offset " + offset);
-
-            Camera.main.transform.position -= offset.SetY(0);
-        }
-        else if (screenPos.x < firstBoundary.x || screenPos.x > firstBoundary.y
-            || screenPos.y < firstBoundary.x || screenPos.y > firstBoundary.y)
-        {
-            screenPos = new Vector3(
-                Mathf.Clamp(screenPos.x, firstBoundary.x, firstBoundary.y),
-                Mathf.Clamp(screenPos.y, firstBoundary.x, firstBoundary.y),
-                screenPos.z);
-
-            Vector3 worldPos = Camera.main.ViewportToWorldPoint(screenPos);
-            Vector3 offset = worldPos - transform.position;
-            //print("offset " + offset);
-
-            Camera.main.transform.position -= offset.SetY(0) * 0.5f;
-        }
     }
 
     private void MovementTypeB()
     {
         m_motion = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
-        transform.position += m_motion * speed;
-        if (m_motion.sqrMagnitude.Sgn() > 0)
+        //print("motion " + m_motion.normalized);
+        //if (m_motion.sqrMagnitude.Sgn() > 0)
+
+        if (Vector3.Angle(transform.forward, m_motion) < 10)
+        {
+            transform.position += m_motion * speed;
             transform.forward = m_motion.normalized;
+            GizmosHelper.DrawLine(transform.position, transform.position + m_motion * 10, Color.blue);
+        }
+        else if (m_motion.sqrMagnitude.Sgn() > 0)
+        {
+            transform.Rotate(Vector3.up, Vector3.SignedAngle(transform.forward, m_motion, Vector3.up).Sgn() * 300 * Time.deltaTime);
+            //transform.forward = Vector3.Slerp(transform.forward, m_motion.normalized,  5f * Time.deltaTime);
+
+            //print("angle " + Vector3.Angle(transform.forward, m_motion));
+        }
 
         //if (m_isConfused == true)
         //    transform.forward = Quaternion.AngleAxis(10, Vector3.up) * transform.forward;
