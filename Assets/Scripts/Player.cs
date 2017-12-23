@@ -69,8 +69,8 @@ public class Player : MonoBehaviour
         m_motion = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
         //print("motion " + m_motion.normalized);
         //if (m_motion.sqrMagnitude.Sgn() > 0)
-
-        if (Vector3.Angle(transform.forward, m_motion) < 10)
+        float angleInAFrame = 300 * Time.deltaTime;
+        if (Vector3.Angle(transform.forward, m_motion) < angleInAFrame* 2)
         {
             transform.position += m_motion * speed;
             transform.forward = m_motion.normalized;
@@ -78,7 +78,7 @@ public class Player : MonoBehaviour
         }
         else if (m_motion.sqrMagnitude.Sgn() > 0)
         {
-            transform.Rotate(Vector3.up, Vector3.SignedAngle(transform.forward, m_motion, Vector3.up).Sgn() * 300 * Time.deltaTime);
+            transform.Rotate(Vector3.up, Vector3.SignedAngle(transform.forward, m_motion, Vector3.up).Sgn() * angleInAFrame);
             //transform.forward = Vector3.Slerp(transform.forward, m_motion.normalized,  5f * Time.deltaTime);
 
             //print("angle " + Vector3.Angle(transform.forward, m_motion));
