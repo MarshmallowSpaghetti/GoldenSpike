@@ -29,6 +29,27 @@ public class FollowerCamera : MonoBehaviour
     {
         // Due to render order, the rect may not be the exact one.
         //DrawRect();
+
+        CheckTargetViewportPos();
+    }
+
+    private void CheckTargetViewportPos()
+    {
+        Vector3 targetViewportPos = ThisCamera.WorldToViewportPoint(target.position);
+
+        if(hardEdge.Contains(targetViewportPos) == false)
+        {
+            // Clamp it
+            targetViewportPos = new Vector3(
+                Mathf.Clamp(targetViewportPos.x, hardEdge.xMin, hardEdge.xMax),
+                Mathf.Clamp(targetViewportPos.y, hardEdge.yMin, hardEdge.yMax),
+                targetViewportPos.z
+                );
+
+            Vector3 clampedWorldPos = ThisCamera.ViewportToWorldPoint(targetViewportPos);
+            // Fix camera to a certain height
+            ThisCamera.transform.position -= (clampedWorldPos - target.position).SetY(0);
+        }
     }
 
     private void DrawRect()

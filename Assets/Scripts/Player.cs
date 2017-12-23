@@ -63,7 +63,7 @@ public class Player : MonoBehaviour
 
         AttackCheck();
 
-        CheckScreenPosition();
+        //CheckScreenPosition();
     }
 
     private void CheckScreenPosition()
