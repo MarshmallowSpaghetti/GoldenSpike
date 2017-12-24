@@ -5,9 +5,9 @@ using UnityEngine;
 [RequireComponent(typeof(Camera))]
 public class FollowerCamera : MonoBehaviour
 {
-    public Transform target;
     public Rect hardEdge;
     public Rect softEdge;
+    public Transform target;
     private Camera m_camera;
 
     public Camera ThisCamera
@@ -40,6 +40,7 @@ public class FollowerCamera : MonoBehaviour
 
         if (hardEdge.Contains(targetViewportPos) == false)
         {
+            //print("target pos " + targetViewportPos);
             // Clamp it
             targetViewportPos = new Vector3(
                 Mathf.Clamp(targetViewportPos.x, hardEdge.xMin, hardEdge.xMax),
