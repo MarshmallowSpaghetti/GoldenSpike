@@ -689,44 +689,6 @@ Prefab:
       propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 120180838037674168, guid: 3a35ce0ee36fe134dba4ce0e2afbcd50,
-        type: 2}
-      propertyPath: m_Parameters.widthMultiplier
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 120180838037674168, guid: 3a35ce0ee36fe134dba4ce0e2afbcd50,
-        type: 2}
-      propertyPath: m_Parameters.colorGradient.key0.a
-      value: 0.78431374
-      objectReference: {fileID: 0}
-    - target: {fileID: 120180838037674168, guid: 3a35ce0ee36fe134dba4ce0e2afbcd50,
-        type: 2}
-      propertyPath: m_Parameters.colorGradient.atime1
-      value: 16769
-      objectReference: {fileID: 0}
-    - target: {fileID: 120180838037674168, guid: 3a35ce0ee36fe134dba4ce0e2afbcd50,
-        type: 2}
-      propertyPath: m_Parameters.colorGradient.key1.a
-      value: 0.627451
-      objectReference: {fileID: 0}
-    - target: {fileID: 120180838037674168, guid: 3a35ce0ee36fe134dba4ce0e2afbcd50,
-        type: 2}
-      propertyPath: m_Parameters.colorGradient.key2.a
-      value: 0.50980395
-      objectReference: {fileID: 0}
-    - target: {fileID: 120180838037674168, guid: 3a35ce0ee36fe134dba4ce0e2afbcd50,
-        type: 2}
-      propertyPath: m_Parameters.colorGradient.key3.a
-      value: 0.37254903
-      objectReference: {fileID: 0}
-    - target: {fileID: 4308314619370394, guid: 3a35ce0ee36fe134dba4ce0e2afbcd50, type: 2}
-      propertyPath: m_LocalScale.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4308314619370394, guid: 3a35ce0ee36fe134dba4ce0e2afbcd50, type: 2}
-      propertyPath: m_LocalScale.z
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 3a35ce0ee36fe134dba4ce0e2afbcd50, type: 2}
   m_IsPrefabParent: 0
@@ -1051,6 +1013,7 @@ MonoBehaviour:
   firePoint: {fileID: 173741520}
   fireBase: {fileID: 643141704}
   projectileArc: {fileID: 1203576085}
+  cooldown: 0.1
 --- !u!1001 &1819018309
 Prefab:
   m_ObjectHideFlags: 0
@@ -1131,6 +1094,9 @@ MonoBehaviour:
   initialFireAngle: 45
   initialFireSpeed: 10
   useLowAngle: 1
+  minSpeed: 1
+  maxSpeed: 15
+  chargeSensitivity: 1.5
   type: 2
 --- !u!4 &1867472423
 Transform:

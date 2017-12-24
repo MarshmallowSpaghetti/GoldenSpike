@@ -23,6 +23,10 @@ public class Player : MonoBehaviour
     public Transform rightHandTrans;
     public Transform holdingItem;
 
+    private ThrowInterface m_throwComponent;
+    private bool m_isAiming = true;
+    private float m_startAimTime = -1;
+
     public bool IsConfused
     {
         get
@@ -51,6 +55,16 @@ public class Player : MonoBehaviour
         }
     }
 
+    public ThrowInterface ThrowComponent
+    {
+        get
+        {
+            if (m_throwComponent == null)
+                m_throwComponent = FindObjectOfType<ThrowInterface>();
+            return m_throwComponent;
+        }
+    }
+
     // Use this for initialization
     void Start()
     {
@@ -67,20 +81,29 @@ public class Player : MonoBehaviour
 
         AttackCheck();
 
-        //if(Input.GetMouseButtonDown(0))
-        //{
-        //    TryToThrowSth();
-        //}
+        CheckMouseStatus();
     }
 
-    private void TryToThrowSth()
+    private void CheckMouseStatus()
     {
-        if(holdingItem != null)
+        if (Input.GetMouseButton(0) && m_isAiming == false)
         {
-            holdingItem.SetParent(null);
-            holdingItem.GetComponent<Rigidbody>().isKinematic = false;
-            holdingItem.GetComponent<Rigidbody>().AddForce(transform.forward.normalized.SetY(0.4f) * 10, ForceMode.Impulse);
-            holdingItem = null;
+            m_isAiming = true;
+            m_startAimTime = Time.time;
+            ThrowComponent.SetEnable(true);
+            ThrowComponent.StartCharge();
+        }
+        else if (Input.GetMouseButton(0) == false && m_isAiming == true)
+        {
+            m_isAiming = false;
+            m_startAimTime = -1;
+            ThrowComponent.SetEnable(false);
+            ThrowComponent.StopChargeAndLaunch();
+        }
+
+        if(m_startAimTime >= 0)
+        {
+            ThrowComponent.SetThrowChargeTime(Time.time - m_startAimTime);
         }
     }
 

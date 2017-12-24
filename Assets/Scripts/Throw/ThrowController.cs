@@ -27,6 +27,11 @@ public class ThrowController : MonoBehaviour
         //print("gravity " + Physics.gravity);
     }
 
+    public void SetEnable(bool _isEnable)
+    {
+        projectileArc.gameObject.SetActive(_isEnable);
+    }
+
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.yellow;
@@ -97,6 +102,7 @@ public class ThrowController : MonoBehaviour
 
     public void Throw()
     {
+        print("fire");
         Player player = GetComponent<Player>();
 
         if(player.holdingItem == null)
@@ -110,7 +116,6 @@ public class ThrowController : MonoBehaviour
             // For debuging
             if (Time.time > lastShotTime + cooldown)
             {
-                print("fire");
                 player.holdingItem.SetParent(null);
                 player.holdingItem.GetComponent<Rigidbody>().isKinematic = false;
                 player.holdingItem.GetComponent<Rigidbody>().velocity =
