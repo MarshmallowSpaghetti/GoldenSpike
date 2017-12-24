@@ -182,16 +182,16 @@ public class Player : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.GetComponent<PickableItem>())
-        {
-            //print("Pick " + collision.gameObject.name);
-            if (leftHandTrans != null && holdingItem == null)
-            {
-                collision.transform.position = (leftHandTrans.position + rightHandTrans.position) * 0.5f;
-                collision.transform.SetParent(transform);
-                collision.gameObject.GetComponent<Rigidbody>().isKinematic = true;
-                holdingItem = collision.transform;
-            }
-        }
+        //if (collision.gameObject.GetComponent<PickableItem>())
+        //{
+        //    //print("Pick " + collision.gameObject.name);
+        //    if (leftHandTrans != null && holdingItem == null)
+        //    {
+        //        collision.transform.position = (leftHandTrans.position + rightHandTrans.position) * 0.5f;
+        //        collision.transform.SetParent(transform);
+        //        collision.gameObject.GetComponent<Rigidbody>().isKinematic = true;
+        //        holdingItem = collision.transform;
+        //    }
+        //}
     }
 }

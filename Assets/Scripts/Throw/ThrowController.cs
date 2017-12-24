@@ -17,6 +17,10 @@ public class ThrowController : MonoBehaviour
 
     private Vector3 targetPoint;
 
+    [SerializeField]
+    float cooldown = 0.1f;
+    private float lastShotTime;
+
     private void Start()
     {
         //Physics.gravity = new Vector3(0f, -50f, 0f);
@@ -79,34 +83,41 @@ public class ThrowController : MonoBehaviour
 
     public void SetTargetWithBothAngleAndSpeed(Vector3 point, float angle, float speed)
     {
-        float dist = ProjectileMath.CalculateLandDistance(firePoint.position.y, Physics.gravity.magnitude, angle, speed);
-        //print("dist " + dist + " actual dist " +
-        //    (point.SetY(0) - firePoint.position.SetY(0)).magnitude);
-
         currentRadian = angle * Mathf.Deg2Rad;
         currentSpeed = speed;
 
         Vector3 direction = point - firePoint.position;
         float yOffset = direction.y;
         direction = Math3d.ProjectVectorOnPlane(Vector3.up, direction);
-        float distance = direction.magnitude;
+        float distance = ProjectileMath.CalculateLandDistance(firePoint.position.y, Physics.gravity.magnitude, angle, speed);
 
-
-        projectileArc.UpdateArc(speed, dist, Physics.gravity.magnitude, currentRadian, direction, true);
+        projectileArc.UpdateArc(speed, distance, Physics.gravity.magnitude, currentRadian, direction, true);
         SetThrowPoint(direction, currentRadian * Mathf.Rad2Deg);
     }
 
     public void Throw()
     {
         Player player = GetComponent<Player>();
+
+        if(player.holdingItem == null)
+        {
+            GameObject item = Instantiate(Resources.Load("PickableItem") as GameObject, firePoint.position, Quaternion.identity);
+            player.holdingItem = item.transform;
+        }
+
         if (player.holdingItem != null)
         {
-            //print("fire");
-            player.holdingItem.SetParent(null);
-            player.holdingItem.GetComponent<Rigidbody>().isKinematic = false;
-            player.holdingItem.GetComponent<Rigidbody>().velocity =
-                firePoint.up * currentSpeed;
-            player.holdingItem = null;
+            // For debuging
+            if (Time.time > lastShotTime + cooldown)
+            {
+                print("fire");
+                player.holdingItem.SetParent(null);
+                player.holdingItem.GetComponent<Rigidbody>().isKinematic = false;
+                player.holdingItem.GetComponent<Rigidbody>().velocity =
+                    firePoint.up * currentSpeed;
+                player.holdingItem = null;
+                lastShotTime = Time.time;
+            }
         }
     }
 
