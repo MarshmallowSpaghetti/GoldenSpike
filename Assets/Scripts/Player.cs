@@ -67,10 +67,10 @@ public class Player : MonoBehaviour
 
         AttackCheck();
 
-        if(Input.GetMouseButtonDown(0))
-        {
-            TryToThrowSth();
-        }
+        //if(Input.GetMouseButtonDown(0))
+        //{
+        //    TryToThrowSth();
+        //}
     }
 
     private void TryToThrowSth()

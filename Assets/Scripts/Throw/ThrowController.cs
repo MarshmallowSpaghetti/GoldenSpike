@@ -6,6 +6,8 @@ public class ThrowController : MonoBehaviour
 {
     [SerializeField]
     Transform firePoint;
+    [SerializeField]
+    Transform fireBase;
 
     [SerializeField]
     ProjectileArc projectileArc;
@@ -53,6 +55,7 @@ public class ThrowController : MonoBehaviour
         currentSpeed = ProjectileMath.CalculateLaunchSpeed(distance, yOffset, Physics.gravity.magnitude, angle * Mathf.Deg2Rad);
 
         projectileArc.UpdateArc(currentSpeed, distance, Physics.gravity.magnitude, currentAngle * Mathf.Deg2Rad, direction, true);
+        SetThrowPoint(direction, currentAngle);
     }
 
     public void SetTargetWithSpeed(Vector3 point, float speed, bool useLowAngle)
@@ -71,5 +74,26 @@ public class ThrowController : MonoBehaviour
             currentAngle = useLowAngle ? angle1 : angle0;
 
         projectileArc.UpdateArc(speed, distance, Physics.gravity.magnitude, currentAngle, direction, targetInRange);
+        SetThrowPoint(direction, currentAngle * Mathf.Rad2Deg);
+    }
+
+    public void Throw()
+    {
+        Player player = GetComponent<Player>();
+        if (player.holdingItem != null)
+        {
+            print("fire");
+            player.holdingItem.SetParent(null);
+            player.holdingItem.GetComponent<Rigidbody>().isKinematic = false;
+            player.holdingItem.GetComponent<Rigidbody>().velocity = 
+                firePoint.up * currentSpeed;
+            player.holdingItem = null;
+        }
+    }
+
+    private void SetThrowPoint(Vector3 planarDirection, float turretAngle)
+    {
+        fireBase.rotation = Quaternion.LookRotation(planarDirection) * Quaternion.Euler(-90, -90, 0);
+        firePoint.localRotation = Quaternion.Euler(90, 90, 0) * Quaternion.AngleAxis(turretAngle, Vector3.forward);
     }
 }

@@ -27,9 +27,9 @@ public class ThrowInterface : MonoBehaviour
         else
             throwController.SetTargetWithSpeed(targetCursor.transform.position, initialFireSpeed, useLowAngle);
 
-        //if (Input.GetButtonDown("Fire1") && !EventSystem.current.IsPointerOverGameObject())
-        //{
-        //    throwController.Fire();
-        //}
+        if (Input.GetButtonDown("Fire1") && !EventSystem.current.IsPointerOverGameObject())
+        {
+            throwController.Throw();
+        }
     }
 }
