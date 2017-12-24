@@ -50,6 +50,24 @@ public static class ProjectileMath
     }
 
     /// <summary>
+    /// Can only be applied when landing elevation has been known 
+    /// and yOffset should always be positive, otherwise it will only choose the further one.
+    /// </summary>
+    /// <param name="_yOffset"></param>
+    /// <param name="_gravity"></param>
+    /// <param name="_angle"></param>
+    /// <param name="_speed"></param>
+    /// <returns></returns>
+    public static float CalculateLandDistance(float _yOffset, float _gravity, float _angle, float _speed)
+    {
+        float v_vertical = _speed * Mathf.Sin(_angle * Mathf.Deg2Rad);
+        float v_horizontal = _speed * Mathf.Cos(_angle * Mathf.Deg2Rad);
+        float timeTaken = (v_vertical + Mathf.Sqrt(v_vertical * v_vertical + 2 * _gravity * _yOffset)) / _gravity;
+
+        return v_horizontal * timeTaken;
+    }
+
+    /// <summary>
     /// Samples a series of points along a projectile arc
     /// </summary>
     /// <param name="iterations">Number of points to sample</param>

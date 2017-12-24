@@ -4,6 +4,13 @@ using UnityEngine.EventSystems;
 
 public class ThrowInterface : MonoBehaviour
 {
+    enum ThrowType
+    {
+        useInitialAngle,
+        useInitialSpeed,
+        useBothAngleAndSpeed
+    }
+
     [SerializeField]
     ProjectArrowMover targetCursor;
 
@@ -18,14 +25,16 @@ public class ThrowInterface : MonoBehaviour
     private bool useLowAngle = true;
 
     [SerializeField]
-    private bool useInitialAngle = true;
+    private ThrowType type = ThrowType.useInitialAngle;
     
     void Update()
     {
-        if (useInitialAngle)
+        if (type == ThrowType.useInitialAngle)
             throwController.SetTargetWithAngle(targetCursor.transform.position, initialFireAngle);
-        else
+        else if (type == ThrowType.useInitialSpeed)
             throwController.SetTargetWithSpeed(targetCursor.transform.position, initialFireSpeed, useLowAngle);
+        else if (type == ThrowType.useBothAngleAndSpeed)
+            throwController.SetTargetWithBothAngleAndSpeed(targetCursor.transform.position, initialFireAngle, initialFireSpeed);
 
         if (Input.GetButtonDown("Fire1") && !EventSystem.current.IsPointerOverGameObject())
         {

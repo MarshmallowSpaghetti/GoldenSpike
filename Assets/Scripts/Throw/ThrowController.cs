@@ -11,9 +11,9 @@ public class ThrowController : MonoBehaviour
 
     [SerializeField]
     ProjectileArc projectileArc;
-    
+
     private float currentSpeed;
-    private float currentAngle;
+    private float currentRadian;
 
     private Vector3 targetPoint;
 
@@ -31,13 +31,13 @@ public class ThrowController : MonoBehaviour
 
     public void SetTargetWithAngle(Vector3 point, float angle)
     {
-        currentAngle = angle;
+        currentRadian = angle * Mathf.Deg2Rad;
 
         targetPoint = point;
         //GizmosHelper.DrawBox(point, Vector3.one * 0.2f, Color.yellow);
         Vector3 direction = point - firePoint.position;
 
-        if(Vector3.Angle(direction, transform.forward) > 10)
+        if (Vector3.Angle(direction, transform.forward) > 10)
         {
             // Haven't face the right direction.
             projectileArc.gameObject.SetActive(false);
@@ -54,8 +54,8 @@ public class ThrowController : MonoBehaviour
 
         currentSpeed = ProjectileMath.CalculateLaunchSpeed(distance, yOffset, Physics.gravity.magnitude, angle * Mathf.Deg2Rad);
 
-        projectileArc.UpdateArc(currentSpeed, distance, Physics.gravity.magnitude, currentAngle * Mathf.Deg2Rad, direction, true);
-        SetThrowPoint(direction, currentAngle);
+        projectileArc.UpdateArc(currentSpeed, distance, Physics.gravity.magnitude, currentRadian, direction, true);
+        SetThrowPoint(direction, currentRadian * Mathf.Rad2Deg);
     }
 
     public void SetTargetWithSpeed(Vector3 point, float speed, bool useLowAngle)
@@ -71,10 +71,29 @@ public class ThrowController : MonoBehaviour
         bool targetInRange = ProjectileMath.CalculateLaunchAngle(speed, distance, yOffset, Physics.gravity.magnitude, out angle0, out angle1);
 
         if (targetInRange)
-            currentAngle = useLowAngle ? angle1 : angle0;
+            currentRadian = useLowAngle ? angle1 : angle0;
 
-        projectileArc.UpdateArc(speed, distance, Physics.gravity.magnitude, currentAngle, direction, targetInRange);
-        SetThrowPoint(direction, currentAngle * Mathf.Rad2Deg);
+        projectileArc.UpdateArc(speed, distance, Physics.gravity.magnitude, currentRadian, direction, targetInRange);
+        SetThrowPoint(direction, currentRadian * Mathf.Rad2Deg);
+    }
+
+    public void SetTargetWithBothAngleAndSpeed(Vector3 point, float angle, float speed)
+    {
+        float dist = ProjectileMath.CalculateLandDistance(firePoint.position.y, Physics.gravity.magnitude, angle, speed);
+        //print("dist " + dist + " actual dist " +
+        //    (point.SetY(0) - firePoint.position.SetY(0)).magnitude);
+
+        currentRadian = angle * Mathf.Deg2Rad;
+        currentSpeed = speed;
+
+        Vector3 direction = point - firePoint.position;
+        float yOffset = direction.y;
+        direction = Math3d.ProjectVectorOnPlane(Vector3.up, direction);
+        float distance = direction.magnitude;
+
+
+        projectileArc.UpdateArc(speed, dist, Physics.gravity.magnitude, currentRadian, direction, true);
+        SetThrowPoint(direction, currentRadian * Mathf.Rad2Deg);
     }
 
     public void Throw()
@@ -82,10 +101,10 @@ public class ThrowController : MonoBehaviour
         Player player = GetComponent<Player>();
         if (player.holdingItem != null)
         {
-            print("fire");
+            //print("fire");
             player.holdingItem.SetParent(null);
             player.holdingItem.GetComponent<Rigidbody>().isKinematic = false;
-            player.holdingItem.GetComponent<Rigidbody>().velocity = 
+            player.holdingItem.GetComponent<Rigidbody>().velocity =
                 firePoint.up * currentSpeed;
             player.holdingItem = null;
         }
