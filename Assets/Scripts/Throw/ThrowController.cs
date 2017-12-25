@@ -130,6 +130,9 @@ public class ThrowController : MonoBehaviour
                 player.holdingItem.GetComponent<Rigidbody>().isKinematic = false;
                 player.holdingItem.GetComponent<Rigidbody>().velocity =
                     firePoint.up * currentSpeed;
+
+                Vector3 torq = Quaternion.Euler(0, 90, 0) * transform.rotation * fireBase.localRotation * new Vector3(10, 0, 0);
+                player.holdingItem.GetComponent<Rigidbody>().AddRelativeTorque(torq, ForceMode.VelocityChange);
                 player.holdingItem = null;
                 lastShotTime = Time.time;
             }
