@@ -8,9 +8,8 @@ public class ThrowController : MonoBehaviour
     Transform firePoint;
     [SerializeField]
     Transform fireBase;
-
-    [SerializeField]
-    ProjectileArc projectileArc;
+    
+    public ProjectileArc projectileArc;
 
     private float currentSpeed;
     private float currentRadian;
@@ -46,18 +45,18 @@ public class ThrowController : MonoBehaviour
         //GizmosHelper.DrawBox(point, Vector3.one * 0.2f, Color.yellow);
         Vector3 direction = point - firePoint.position;
 
-        if (Vector3.Angle(direction, transform.forward) > 10)
-        {
-            // Haven't face the right direction.
-            projectileArc.gameObject.SetActive(false);
-            return;
-        }
-        else
-        {
-            projectileArc.gameObject.SetActive(true);
-        }
+        //if (Vector3.Angle(direction, transform.forward) > 10)
+        //{
+        //    // Haven't face the right direction.
+        //    projectileArc.gameObject.SetActive(false);
+        //    return;
+        //}
+        //else
+        //{
+        //    projectileArc.gameObject.SetActive(true);
+        //}
 
-        float yOffset = -direction.y;
+        float yOffset = direction.y;
         direction = Math3d.ProjectVectorOnPlane(Vector3.up, direction);
         float distance = direction.magnitude;
 
@@ -65,6 +64,17 @@ public class ThrowController : MonoBehaviour
 
         projectileArc.UpdateArc(currentSpeed, distance, Physics.gravity.magnitude, currentRadian, direction, true);
         SetThrowPoint(direction, currentRadian * Mathf.Rad2Deg);
+    }
+
+    public float GetRequiredSpeed(Vector3 point, float angle)
+    {
+        Vector3 direction = point - firePoint.position;
+        
+        float yOffset = direction.y;
+        direction = Math3d.ProjectVectorOnPlane(Vector3.up, direction);
+        float distance = direction.magnitude;
+
+        return ProjectileMath.CalculateLaunchSpeed(distance, yOffset, Physics.gravity.magnitude, angle * Mathf.Deg2Rad);
     }
 
     public void SetTargetWithSpeed(Vector3 point, float speed, bool useLowAngle)

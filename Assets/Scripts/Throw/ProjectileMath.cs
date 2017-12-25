@@ -38,13 +38,13 @@ public static class ProjectileMath
     /// Calculates the initial launch speed required to hit a target at distance with elevation yOffset.
     /// </summary>
     /// <param name="distance">Planar distance from origin to the target</param>
-    /// <param name="yOffset">Elevation of the origin with respect to the target</param>
+    /// <param name="yOffset">Elevation of the target with respect to the initial fire position</param>
     /// <param name="gravity">Downward acceleration in m/s^2</param>
     /// <param name="angle">Initial launch angle in radians</param>
     /// <returns>Initial launch speed</returns>
     public static float CalculateLaunchSpeed(float distance, float yOffset, float gravity, float angle)
     {
-        float speed = (distance * Mathf.Sqrt(gravity) * Mathf.Sqrt(1 / Mathf.Cos(angle))) / Mathf.Sqrt(2 * distance * Mathf.Sin(angle) + 2 * yOffset * Mathf.Cos(angle));
+        float speed = (distance * Mathf.Sqrt(gravity) * Mathf.Sqrt(1 / Mathf.Cos(angle))) / Mathf.Sqrt(2 * distance * Mathf.Sin(angle) - 2 * yOffset * Mathf.Cos(angle));
 
         return speed;
     }

@@ -10,27 +10,45 @@ public class ThrowInterface : MonoBehaviour
         useInitialSpeed,
         useBothAngleAndSpeed
     }
+    
+    public ProjectArrowMover targetCursor;
 
     [SerializeField]
-    ProjectArrowMover targetCursor;
-
-    [SerializeField]
-    ThrowController throwController;
+    public ThrowController throwController;
     
     [SerializeField]
-    private float initialFireAngle = 45;
+    public float initialFireAngle = 45;
     [SerializeField]
     private float initialFireSpeed = 35;
     [SerializeField]
     private bool useLowAngle = true;
 
-    public float minSpeed = 5;
-    public float maxSpeed = 50;
+    public float minSpeed = 1;
+    public float maxSpeed = 15;
+    private float m_dynamicMaxSpeed = 15;
     public float chargeSensitivity = 1f;
 
     [SerializeField]
     private ThrowType type = ThrowType.useInitialAngle;
-    
+
+    public float DynamicMaxSpeed
+    {
+        get
+        {
+            return m_dynamicMaxSpeed;
+        }
+
+        set
+        {
+            m_dynamicMaxSpeed = value;
+        }
+    }
+
+    private void Start()
+    {
+        DynamicMaxSpeed = initialFireSpeed;
+    }
+
     void Update()
     {
         DrawLine();
@@ -68,11 +86,11 @@ public class ThrowInterface : MonoBehaviour
 
         initialFireSpeed = minSpeed;
         // To clear the old line before next time it apears
-        DrawLine();
+        throwController.projectileArc.GetComponent<LineRenderer>().positionCount = 0;
     }
 
     public void SetThrowChargeTime(float _time)
     {
-        initialFireSpeed = Mathf.Lerp(initialFireSpeed, maxSpeed, chargeSensitivity * Time.deltaTime);
+        initialFireSpeed = Mathf.Lerp(initialFireSpeed, DynamicMaxSpeed, chargeSensitivity * Time.deltaTime);
     }
 }

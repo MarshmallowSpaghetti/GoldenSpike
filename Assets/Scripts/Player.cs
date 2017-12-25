@@ -22,9 +22,11 @@ public class Player : MonoBehaviour
     public Transform leftHandTrans;
     public Transform rightHandTrans;
     public Transform holdingItem;
+    [SerializeField]
+    Transform firePoint;
 
     private ThrowInterface m_throwComponent;
-    private bool m_isAiming = true;
+    private bool m_isAiming = false;
     private float m_startAimTime = -1;
 
     public bool IsConfused
@@ -104,7 +106,21 @@ public class Player : MonoBehaviour
         if(m_startAimTime >= 0)
         {
             ThrowComponent.SetThrowChargeTime(Time.time - m_startAimTime);
+            UpdateDynamicalMaxSpeed();
         }
+    }
+
+    private void UpdateDynamicalMaxSpeed()
+    {
+        Vector3 direction2D = 
+            (ThrowComponent.targetCursor.transform.position - firePoint.position).SetY(0);
+        Vector3 extend = Mathf.Max(direction2D.magnitude * 0.5f, 1) * direction2D.normalized;
+
+        float maxSpeed =
+            ThrowComponent.throwController.GetRequiredSpeed(ThrowComponent.targetCursor.transform.position + extend, ThrowComponent.initialFireAngle);
+
+        //print("max speed " + maxSpeed);
+        ThrowComponent.DynamicMaxSpeed = maxSpeed;
     }
 
     private void GlobalMoveAlwaysForward()
