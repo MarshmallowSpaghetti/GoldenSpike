@@ -938,6 +938,7 @@ MonoBehaviour:
   rightHandTrans: {fileID: 874332350}
   holdingItem: {fileID: 0}
   firePoint: {fileID: 173741520}
+  keyboardSensitivity: 15
 --- !u!54 &1703525433
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1141,9 +1142,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetCursor: {fileID: 1819018310}
   throwController: {fileID: 1703525440}
-  initialFireAngle: 45
-  initialFireSpeed: 10
+  m_initialFireAngle: 45
+  m_initialFireSpeed: 35
   useLowAngle: 1
+  minAngle: 0
+  maxAngle: 60
   minSpeed: 1
   maxSpeed: 15
   chargeSensitivity: 1.5

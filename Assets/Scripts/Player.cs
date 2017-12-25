@@ -29,6 +29,8 @@ public class Player : MonoBehaviour
     private bool m_isAiming = false;
     private float m_startAimTime = -1;
 
+    public float keyboardSensitivity = 5;
+
     public bool IsConfused
     {
         get
@@ -84,6 +86,7 @@ public class Player : MonoBehaviour
         AttackCheck();
 
         CheckMouseStatus();
+        CheckKeyboard();
     }
 
     private void CheckMouseStatus()
@@ -110,6 +113,18 @@ public class Player : MonoBehaviour
         }
     }
 
+    private void CheckKeyboard()
+    {
+        if(Input.GetKey(KeyCode.Q))
+        {
+            ThrowComponent.InitialFireAngle += keyboardSensitivity * Time.deltaTime;
+        }
+        else if(Input.GetKey(KeyCode.E))
+        {
+            ThrowComponent.InitialFireAngle += -keyboardSensitivity * Time.deltaTime;
+        }
+    }
+
     private void UpdateDynamicalMaxSpeed()
     {
         Vector3 direction2D = 
@@ -117,7 +132,7 @@ public class Player : MonoBehaviour
         Vector3 extend = Mathf.Max(direction2D.magnitude * 0.5f, 1) * direction2D.normalized;
 
         float maxSpeed =
-            ThrowComponent.throwController.GetRequiredSpeed(ThrowComponent.targetCursor.transform.position + extend, ThrowComponent.initialFireAngle);
+            ThrowComponent.throwController.GetRequiredSpeed(ThrowComponent.targetCursor.transform.position + extend, ThrowComponent.InitialFireAngle);
 
         //print("max speed " + maxSpeed);
         ThrowComponent.DynamicMaxSpeed = maxSpeed;
