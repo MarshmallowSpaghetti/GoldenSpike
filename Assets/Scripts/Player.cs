@@ -19,8 +19,8 @@ public class Player : MonoBehaviour
     private Vector2 firstBoundary = new Vector2(0.4f, 0.6f);
     private Vector2 secondaryBoundary = new Vector2(0.1f, 0.9f);
 
-    public Transform leftHandTrans;
-    public Transform rightHandTrans;
+    //public Transform leftHandTrans;
+    //public Transform rightHandTrans;
     public Transform holdingItem;
     [SerializeField]
     Transform firePoint;
@@ -82,8 +82,6 @@ public class Player : MonoBehaviour
         GlobalMoveFaceMouse();
 
         //ClampPlayerPos();
-
-        AttackCheck();
 
         CheckMouseStatus();
         CheckKeyboard();
@@ -197,10 +195,6 @@ public class Player : MonoBehaviour
         if (Physics.Raycast(ray, out hit))
             if (hit.transform.CompareTag("Ground"))
                 m_lookPos = hit.point;
-    }
-
-    private void AttackCheck()
-    {
     }
 
     public void FindRoomCornerPoints(out Vector3 leftDown, out Vector3 rightUp)
