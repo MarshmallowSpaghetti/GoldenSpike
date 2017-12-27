@@ -112,6 +112,7 @@ public class Player : MonoBehaviour
             m_startAimTime = Time.time;
             ThrowComponent.SetEnable(true);
             ThrowComponent.StartCharge();
+            PlayerAnimController.Hold();
         }
         else if (Input.GetMouseButton(0) == false && m_isAiming == true)
         {
@@ -119,6 +120,7 @@ public class Player : MonoBehaviour
             m_startAimTime = -1;
             ThrowComponent.SetEnable(false);
             ThrowComponent.StopChargeAndLaunch();
+            PlayerAnimController.Throw();
         }
 
         if(m_startAimTime >= 0)
@@ -209,11 +211,18 @@ public class Player : MonoBehaviour
 
     private void UpdateMouseHitPos()
     {
-        RaycastHit hit;
+        //RaycastHit hit;
+        //Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        //if (Physics.Raycast(ray, out hit))
+        //    if (hit.transform.CompareTag("Ground"))
+        //        m_lookPos = hit.point;
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        if (Physics.Raycast(ray, out hit))
-            if (hit.transform.CompareTag("Ground"))
-                m_lookPos = hit.point;
+
+        RaycastHit hit;
+        if (Physics.Raycast(ray, out hit, float.MaxValue, 1 << LayerMask.NameToLayer("Ground")))
+        {
+            m_lookPos = hit.point;
+        }
     }
 
     public void FindRoomCornerPoints(out Vector3 leftDown, out Vector3 rightUp)

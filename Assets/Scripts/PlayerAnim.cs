@@ -43,4 +43,15 @@ public class PlayerAnim : MonoBehaviour
         Animator.SetFloat("ZOffset", offset.z);
         Animator.SetFloat("Speed", _motionDir.magnitude);
     }
+
+    public void Throw()
+    {
+        Animator.SetBool("IsHold", false);
+        Animator.Play("Push");
+    }
+
+    public void Hold()
+    {
+        Animator.SetBool("IsHold", true);
+    }
 }
