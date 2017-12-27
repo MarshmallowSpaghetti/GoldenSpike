@@ -41,5 +41,6 @@ public class PlayerAnim : MonoBehaviour
         //print("offset (" + offset.x + ", " + offset.z + ")");
         Animator.SetFloat("XOffset", offset.x);
         Animator.SetFloat("ZOffset", offset.z);
+        Animator.SetFloat("Speed", _motionDir.magnitude);
     }
 }
