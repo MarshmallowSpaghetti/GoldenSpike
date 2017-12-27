@@ -31,6 +31,8 @@ public class Player : MonoBehaviour
 
     public float keyboardSensitivity = 5;
 
+    private PlayerAnim m_playerAnimController;
+
     public bool IsConfused
     {
         get
@@ -66,6 +68,21 @@ public class Player : MonoBehaviour
             if (m_throwComponent == null)
                 m_throwComponent = FindObjectOfType<ThrowInterface>();
             return m_throwComponent;
+        }
+    }
+
+    public PlayerAnim PlayerAnimController
+    {
+        get
+        {
+            if (m_playerAnimController == null)
+                m_playerAnimController = GetComponent<PlayerAnim>();
+            return m_playerAnimController;
+        }
+
+        set
+        {
+            m_playerAnimController = value;
         }
     }
 
@@ -165,6 +182,8 @@ public class Player : MonoBehaviour
 
         transform.forward =
             Vector3.Slerp(transform.forward, (m_lookPos - transform.position).SetY(0), 0.1f);
+        
+        PlayerAnimController.GetAnimOffset(transform.forward, m_motion);
     }
 
     private void MovementTypeA()
