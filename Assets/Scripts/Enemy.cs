@@ -69,6 +69,7 @@ public class Enemy : MonoBehaviour
 
     public IEnumerator WalkingAround()
     {
+        Vector3 targetForTarget = new Vector3(0, -999, 0);
         while (IsActive)
         {
             if (m_isFrozen)
@@ -97,16 +98,33 @@ public class Enemy : MonoBehaviour
                 if (targetDistance > 0.1f)
                 {
 
-                    transform.Translate((targetPos.SetY(0) - transform.position.SetY(0)).normalized * Time.deltaTime * speed, Space.World);
-                    //transform.position += (targetPos.SetY(0) - transform.position.SetY(0)).normalized * Time.deltaTime;
+                    //transform.Translate((targetPos.SetY(0) - transform.position.SetY(0)).normalized * Time.deltaTime * speed, Space.World);
+                    transform.position += (targetPos.SetY(0) - transform.position.SetY(0)).normalized * Time.deltaTime * speed;
+
                     transform.forward = (targetPos.SetY(0) - transform.position.SetY(0));
                     if (CheckIfObstacleAhead(targetDistance))
                     {
-                        // Turn around
-                        //StartCoroutine(TurnAroundAndFindAWay(targetPos));
+                        if (targetForTarget.y < 0)
+                        {
+                            // Turn around
+                            //StartCoroutine(TurnAroundAndFindAWay());
 
-                        // Assign new target pos
-                        targetPos = targetPos.SetY(-999);
+                            // Assign new target pos
+                            //targetPos = targetPos.SetY(-999);
+
+                            // Instead of assign a new one directly, we try to move the existing target point to somewhere reachable.
+
+                            targetForTarget = AssignPosInRoom();
+                        }
+                        else
+                        {
+                            //print("Moving target pos from " + targetPos + " to " + targetForTarget);
+                            targetPos = 
+                                Vector3.Lerp(targetPos, targetForTarget,
+                                0.5f * Time.deltaTime);
+                            if ((targetPos - targetForTarget).magnitude < 0.1f)
+                                targetForTarget = targetForTarget.SetY(-999);
+                        }
                     }
                 }
                 else
@@ -145,7 +163,7 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    IEnumerator TurnAroundAndFindAWay(Vector3 _target)
+    IEnumerator TurnAroundAndFindAWay()
     {
         // Step1. Find an angle where no more obstacle ahead
         float targetDistance = (targetPos.SetY(0) - transform.position.SetY(0)).magnitude;
@@ -174,7 +192,7 @@ public class Enemy : MonoBehaviour
 
         // There's obstacle on way to target
         if (hitInfo.point != null
-            && (hitInfo.point - transform.position).magnitude + boundaryThickness < _targetDistance)
+            && (hitInfo.point - transform.position).magnitude - boundaryThickness < _targetDistance)
         {
             return true;
         }
