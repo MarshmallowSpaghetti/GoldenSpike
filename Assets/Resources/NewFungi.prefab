@@ -548,8 +548,8 @@ GameObject:
   - component: {fileID: 4606905492104152}
   - component: {fileID: 95905191504506456}
   - component: {fileID: 54500974205311418}
-  - component: {fileID: 136380733264302706}
   - component: {fileID: 114335463389796172}
+  - component: {fileID: 143863586242732538}
   m_Layer: 10
   m_Name: NewFungi
   m_TagString: Untagged
@@ -805,7 +805,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1981017118021390}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -32, y: 0, z: 27}
+  m_LocalPosition: {x: -27, y: 0, z: 27}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4715401558112796}
@@ -1107,22 +1107,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b18c1db9bff392e479de384772412cb1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 3
+  speed: 2
   boundaryThickness: 0.7
   countDownTxt: {fileID: 0}
---- !u!136 &136380733264302706
-CapsuleCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1981017118021390}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.5
-  m_Height: 1
-  m_Direction: 1
-  m_Center: {x: 0, y: 0.5, z: 0}
 --- !u!137 &137283111797008340
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1
@@ -1263,3 +1250,20 @@ SkinnedMeshRenderer:
     m_Center: {x: 0.0007629208, y: 0.02965518, z: -0.009306755}
     m_Extent: {x: 0.034711793, y: 0.03344827, z: 0.042459268}
   m_DirtyAABB: 0
+--- !u!143 &143863586242732538
+CharacterController:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1981017118021390}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Height: 1.2
+  m_Radius: 0.41
+  m_SlopeLimit: 45
+  m_StepOffset: 0.3
+  m_SkinWidth: 0.08
+  m_MinMoveDistance: 0.001
+  m_Center: {x: 0, y: 0.6, z: 0}

@@ -15,6 +15,8 @@ public class Enemy : MonoBehaviour
     public float speed = 1;
     public float boundaryThickness = 0.3f;
 
+    private CharacterController m_charController;
+
     public TextMesh countDownTxt;
 
     public bool IsActive
@@ -45,6 +47,21 @@ public class Enemy : MonoBehaviour
         set
         {
             m_isFrozen = value;
+        }
+    }
+
+    public CharacterController CharController
+    {
+        get
+        {
+            if (m_charController == null)
+                m_charController = GetComponent<CharacterController>();
+            return m_charController;
+        }
+
+        set
+        {
+            m_charController = value;
         }
     }
 
@@ -95,11 +112,12 @@ public class Enemy : MonoBehaviour
             {
                 //print("dis " + (targetPos - transform.position).SetY(0).magnitude);
                 float targetDistance = (targetPos.SetY(0) - transform.position.SetY(0)).magnitude;
-                if (targetDistance > 0.1f)
+                if (targetDistance > boundaryThickness)
                 {
 
                     //transform.Translate((targetPos.SetY(0) - transform.position.SetY(0)).normalized * Time.deltaTime * speed, Space.World);
-                    transform.position += (targetPos.SetY(0) - transform.position.SetY(0)).normalized * Time.deltaTime * speed;
+                    //transform.position += (targetPos.SetY(0) - transform.position.SetY(0)).normalized * Time.deltaTime * speed;
+                    CharController.Move((targetPos.SetY(0) - transform.position.SetY(0)).normalized * Time.deltaTime * speed);
 
                     transform.forward = (targetPos.SetY(0) - transform.position.SetY(0));
                     if (CheckIfObstacleAhead(targetDistance))

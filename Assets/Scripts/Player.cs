@@ -32,6 +32,7 @@ public class Player : MonoBehaviour
     public float keyboardSensitivity = 5;
 
     private PlayerAnim m_playerAnimController;
+    private CharacterController m_charController;
 
     public bool IsConfused
     {
@@ -83,6 +84,21 @@ public class Player : MonoBehaviour
         set
         {
             m_playerAnimController = value;
+        }
+    }
+
+    public CharacterController CharController
+    {
+        get
+        {
+            if (m_charController == null)
+                m_charController = GetComponent<CharacterController>();
+            return m_charController;
+        }
+
+        set
+        {
+            m_charController = value;
         }
     }
 
@@ -180,7 +196,8 @@ public class Player : MonoBehaviour
     {
         m_motion = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
         //print("motion " + m_motion.normalized);
-        transform.position += m_motion * speed;
+        //transform.position += m_motion * speed;
+        CharController.Move(m_motion * speed);
 
         transform.forward =
             Vector3.Slerp(transform.forward, (m_lookPos - transform.position).SetY(0), 0.1f);

@@ -26,7 +26,7 @@ public class FollowerCamera : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void LateUpdate()
     {
         // Due to render order, the rect may not be the exact one.
         //DrawRect();
